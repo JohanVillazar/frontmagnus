@@ -98,7 +98,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || "Error al crear pedido");
+      if (!res.ok) throw new Error(data.msg || "Falta un ingrediente en la receta o inventario");
 
       toast({ title: "Pedido creado exitosamente", status: "success" });
       onOrderSuccess?.();
