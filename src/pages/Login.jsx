@@ -99,13 +99,11 @@ const Login = () => {
       >
         <VStack spacing={4}>
           <Image
-            src="../public/magnus.png" 
+            src="/magnus.png" 
             alt="Magnus POS"
             maxW="800px"
             objectFit="contain"
           />
-          
-          
         </VStack>
       </Box>
     </Flex>
