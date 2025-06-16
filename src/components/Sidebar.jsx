@@ -40,10 +40,12 @@ const Sidebar = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) setUser(storedUser);
-  }, []);
+ useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  if (storedUser) {
+    setUser(storedUser);
+  }
+}, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -128,14 +130,22 @@ const Sidebar = () => {
       </Box>
 
       {/* USER FOOTER */}
-      <HStack spacing={3} align="center" mt="auto" pt={4}>
-        <Avatar size="sm" name={user.name} />
-        <Box>
-          <Text fontWeight="bold" color="white">{user.name} {user.lastName}</Text>
+      {user ? (
+        <HStack spacing={3} align="center" mt="auto" pt={4}>
+          <Avatar size="sm" name={`${user.name} ${user.lastName}`} />
+          <Box>
+            <Text fontWeight="bold" color="white">
+              {user.name} {user.lastName}
+            </Text>
+            <Text fontSize="sm" color="whiteAlpha.700">{user.email}</Text>
+          </Box>
+        </HStack>
+      ) : (
+        <Text fontSize="sm" mt={4} color="whiteAlpha.700">
+          Cargando usuario...
+        </Text>
+      )}
 
-          <Text fontSize="sm" color="whiteAlpha.700">{user.email}</Text>
-        </Box>
-      </HStack>
 
       <Box mt="auto">
         <Button
