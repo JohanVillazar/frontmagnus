@@ -53,11 +53,13 @@ function SessionExpiredModal() {
   );
 }
 
+
 function AppContent() {
+  const { isLoading } = useAuth();
  const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const hideSidebar = location.pathname === "/" || location.pathname === "/register";
-  const { isLoading } = useAuth();
+  
 
     if (isLoading) {
     return (
