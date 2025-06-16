@@ -20,7 +20,7 @@ const CashOpenForm = ({ onSuccess }) => {
   const [products, setProducts] = useState([{ variantId: "", quantity: "", autoLoaded: false }]);
   const toast = useToast();
 
-  const userId = JSON.parse(localStorage.getItem("usuario"))?.id;
+  const userId = JSON.parse(localStorage.getItem("user"))?.id;
 
   useEffect(() => {
     const fetchVariants = async () => {
