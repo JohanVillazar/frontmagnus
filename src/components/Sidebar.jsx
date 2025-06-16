@@ -36,7 +36,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem("user");
+      const storedUser = localStorage.getItem("usuario");
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
         if (parsedUser?.name && parsedUser?.email) {

@@ -36,7 +36,7 @@ const Login = () => {
       if (!res.ok) throw new Error(data.msg || "Credenciales incorrectas");
 
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("usuario", JSON.stringify(data.user));
 
       toast({ title: "Inicio de sesión exitoso", status: "success" });
       navigate("/dashboard");
