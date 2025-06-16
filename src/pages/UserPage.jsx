@@ -53,7 +53,7 @@ const UserPage = () => {
   };
 
   return (
-    <Box ml="250px" p={6}>
+    <Box p={{ base: 4, md: 8 }}>
       <Heading mb={6}>Crear usuarios del sistema</Heading>
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
         <Box>

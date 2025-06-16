@@ -3,7 +3,7 @@ import CreateSupplierForm from "../components/CreateSupplierForm";
 
 const SupplierPage = () => {
   return (
-    <Box ml="250px" p={6}>
+    <Box p={{ base: 4, md: 8 }}>
       <Heading mb={6}>Registrar Nuevo Proveedor</Heading>
       <CreateSupplierForm />
     </Box>
