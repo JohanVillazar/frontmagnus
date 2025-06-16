@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { Box, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button,useDisclosure,Drawer,DrawerContent,
-  IconButton
- } from "@chakra-ui/react";
+import { Box, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button,useDisclosure,Drawer,DrawerContent,FiMenu} from "@chakra-ui/react";
+import { FiMenu } from "react-icons/fi";
 import { useEffect } from "react";
 
 import Sidebar from "./components/Sidebar";
