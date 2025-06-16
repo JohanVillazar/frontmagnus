@@ -108,8 +108,8 @@ const CreatePurchase = () => {
   };
 
   return (
-    <Flex ml={{ base: 0, md: "250px" }} p={6} justify="center" align="start" minH="100vh">
-      <Box bg="white" p={{ base: 4, md: 8 }}>
+    <Flex ml={{ base: 0, md: "20px" }} p={6} justify="center" align="start" minH="100vh">
+      <Box bg="white" p={6} rounded="lg" shadow="md" w="full" maxW="lg">
         <Heading size="lg" mb={6} textAlign="center">
           Registrar Nueva Compra
         </Heading>
