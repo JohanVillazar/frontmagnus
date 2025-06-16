@@ -146,9 +146,6 @@ function AppContent() {
   </Box>
 );
 } 
-
-
-
 function InterceptorWrapper() {
   const { triggerSessionExpired } = useSessionExpired();
 
@@ -161,13 +158,11 @@ function InterceptorWrapper() {
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <SessionExpiredProvider>
-          <InterceptorWrapper />
-        </SessionExpiredProvider>
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <SessionExpiredProvider>
+        <InterceptorWrapper />
+      </SessionExpiredProvider>
+    </AuthProvider>
   );
 }
 
