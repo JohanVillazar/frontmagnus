@@ -93,6 +93,7 @@ const SalesPage = () => {
           unitPrice: item.price,
         })),
       };
+      console.log("Payload de venta:", payload);
 
       const res = await fetch("https://backmagnus-production.up.railway.app/api/sale/create", {
         method: "POST",
