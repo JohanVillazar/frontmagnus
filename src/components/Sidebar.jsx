@@ -42,7 +42,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("usuario", "lastName"));
+    const storedUser = JSON.parse(localStorage.getItem("name", "lastName"));
     if (storedUser) setUser(storedUser);
   }, []);
   const handleLogout = () => {
