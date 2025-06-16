@@ -58,7 +58,7 @@ const CashOpenPage = () => {
   };
 
   return (
-    <Box ml="250px" p={6}>
+    <Box p={{ base: 4, md: 8 }}>
       <Heading size="lg" mb={4}>Gestión de Caja</Heading>
       <Divider mb={4} />
 

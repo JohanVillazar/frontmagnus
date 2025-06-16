@@ -57,7 +57,7 @@ const TablesPage = () => {
 
 
   return (
-    <Box ml="250px" p={6}>
+    <Box p={{ base: 4, md: 8 }}>
     <Flex justify="space-between" align="center" mb={6}>
   <Heading size="lg">Gestión de Mesas</Heading>
   <Flex gap={2}>

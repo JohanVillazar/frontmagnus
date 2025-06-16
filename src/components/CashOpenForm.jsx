@@ -135,7 +135,7 @@ const CashOpenForm = ({ onSuccess }) => {
   };
 
   return (
-    <Box bg="white" p={6} borderRadius="lg" boxShadow="md" maxW="600px">
+    <Box bg="white" p={6} borderRadius="lg" boxShadow="md" maxW="500px">
       <Heading size="md" mb={4}>Abrir Caja</Heading>
 
       <VStack spacing={4} align="stretch">
