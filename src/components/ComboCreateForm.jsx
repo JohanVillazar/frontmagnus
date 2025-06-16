@@ -98,7 +98,7 @@ const ComboCreateForm = () => {
   };
 
   return (
-    <Box maxW="800px" mx="auto" mt={10} p={8} bg="white" borderRadius="md" boxShadow="lg">
+    <Box maxW="700px" mx="auto" mt={10} p={8} bg="white" borderRadius="md" boxShadow="lg">
   <Heading size="lg" mb={6} textAlign="center">
     Crear Receta
   </Heading>

@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import ComboCreateForm from "../components/ComboCreateForm";
 
 const CreateComboPage = () => (
-  <Box ml={{ base: 0, md: "250px" }} p={6}>
+  <Box p={{ base: 4, md: 8 }}>
     <ComboCreateForm />
   </Box>
 );

@@ -88,7 +88,7 @@ const ProductList = () => {
   );
 
   return (
-    <Box p={6} ml={{ base: "0", md: "250px" }}>
+    <Box p={{ base: 4, md: 8 }}>
       <Heading as="h1" size="xl" mb={2}>Inventario General</Heading>
       <input
         type="text"
