@@ -52,13 +52,17 @@ const Sidebar = () => {
     <Box
       w="250px"
       h="100vh"
+      position="fixed"
+      top = "0"
+      left = "0"
       bg="#62189e"
       color="white"
       p={4}
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
-      position="fixed"
+      zIndex="1000"
+      
     >
       {/* TOP SECTION */}
       <Box>
