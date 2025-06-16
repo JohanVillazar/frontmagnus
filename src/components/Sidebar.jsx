@@ -51,7 +51,7 @@ const Sidebar = () => {
 
   return (
     <Box
-      w="250px"
+      w="200px"
       h="100vh"
       position="fixed"
       top = "0"
