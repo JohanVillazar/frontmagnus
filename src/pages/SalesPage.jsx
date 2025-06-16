@@ -84,7 +84,7 @@ const SalesPage = () => {
       const payload = {
         userId,
         cashRegisterId,
-        customerId: "0fa184c9-af51-4565-9f68-d3c320062215", //cliente default
+        customerId:'0fa184c9-af51-4565-9f68-d3c320062215', //cliente default
         paymentMethod: paymentMethod || "efectivo",
         shippingCost: parseFloat(shipping),
         details: cartItems.map((item) => ({
