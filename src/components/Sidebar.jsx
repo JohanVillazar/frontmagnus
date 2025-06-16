@@ -35,18 +35,12 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const storedUser = localStorage.getItem("usuario");
-      if (storedUser) {
-        const parsedUser = JSON.parse(storedUser);
-        if (parsedUser?.name && parsedUser?.email) {
-          setUser(parsedUser);
-        }
-      }
-    } catch (error) {
-      console.error("Error al obtener usuario del localStorage:", error);
-    }
-  }, []);
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");

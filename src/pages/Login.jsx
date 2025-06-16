@@ -24,26 +24,27 @@ const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      const res = await fetch("https://backmagnus-production.up.railway.app/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+const handleLogin = async () => {
+  try {
+    const res = await fetch("https://backmagnus-production.up.railway.app/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || "Credenciales incorrectas");
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.msg || "Credenciales incorrectas");
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("usuario", JSON.stringify(data.user));
+    // ✅ Importante: usar la clave "user" (no "usuario")
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
 
-      toast({ title: "Inicio de sesión exitoso", status: "success" });
-      navigate("/dashboard");
-    } catch (error) {
-      toast({ title: "Error", description: error.message, status: "error" });
-    }
-  };
+    toast({ title: "Inicio de sesión exitoso", status: "success" });
+    navigate("/dashboard");
+  } catch (error) {
+    toast({ title: "Error", description: error.message, status: "error" });
+  }
+};
 
   return (
     <Flex h="100vh" flexDirection={{ base: "column", md: "row" }}>
