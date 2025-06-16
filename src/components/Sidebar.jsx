@@ -1,51 +1,52 @@
 import {
   Box,
-  VStack,
   Text,
+  VStack,
   HStack,
-  Link,
+  Avatar,
+  Button,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Avatar,
-
+  Icon,
+  Link,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
-  ShoppingCart,
   Package,
-  Users,
-  BarChart,
-  ClipboardList,
-  FileText,
-  Warehouse,
-  Store,
-  UserCog,
   Plus,
-  List,
-  LogOut,
-  Truck,
-  Component,
   ListChecks,
-
+  Component,
+  Warehouse,
+  LogOut,
+  Store,
+  ClipboardList,
+  Users,
+  Truck,
+  UserCog,
 } from "lucide-react";
-import { Button, Icon } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const Sidebar = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
- useEffect(() => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  if (storedUser) {
-    setUser(storedUser);
-  }
-}, []);
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser?.name && parsedUser?.email) {
+          setUser(parsedUser);
+        }
+      }
+    } catch (error) {
+      console.error("Error al obtener usuario del localStorage:", error);
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -67,16 +68,17 @@ const Sidebar = () => {
     >
       {/* TOP SECTION */}
       <Box>
-        <Text fontSize="x2" fontWeight="bold" mb={6}>
+        <Text fontSize="xl" fontWeight="bold" mb={6}>
           Magnus Control
         </Text>
 
         <VStack align="start" spacing={2} w="full">
           <NavItem icon={LayoutDashboard} to="/dashboard" label="Dashboard" />
+
           <Accordion allowToggle w="full">
             <AccordionItem border="none">
               <AccordionButton
-                _hover={{ bg: " #f77700" }}
+                _hover={{ bg: "#f77700" }}
                 px={3}
                 py={2}
                 borderRadius="md"
@@ -93,7 +95,6 @@ const Sidebar = () => {
                   <SubNavItem icon={ListChecks} to="/listar" label="Existencias" />
                   <SubNavItem icon={Plus} to="/combos/nuevo" label="Crear Receta" />
                   <SubNavItem icon={Component} to="/combos" label="Listar Recetas" />
-
                 </VStack>
               </AccordionPanel>
             </AccordionItem>
@@ -102,7 +103,7 @@ const Sidebar = () => {
           <Accordion allowToggle w="full">
             <AccordionItem border="none">
               <AccordionButton
-                _hover={{ bg: " #f77700" }}
+                _hover={{ bg: "#f77700" }}
                 px={3}
                 py={2}
                 borderRadius="md"
@@ -115,12 +116,13 @@ const Sidebar = () => {
               </AccordionButton>
               <AccordionPanel px={3} pb={2}>
                 <VStack align="start" spacing={1}>
-                  <SubNavItem icon={Plus} to="/caja/abrir" label="Gestion de Caja" />
-                  <SubNavItem icon={LogOut} to="/caja/cerrar" label="Cerrar caja" />
+                  <SubNavItem icon={Plus} to="/caja/abrir" label="Gestión de Caja" />
+                  <SubNavItem icon={LogOut} to="/caja/cerrar" label="Cerrar Caja" />
                 </VStack>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
+
           <NavItem icon={Store} to="/mesas" label="Mesas" />
           <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" />
           <NavItem icon={Users} to="/clientes" label="Clientes" />
@@ -130,29 +132,29 @@ const Sidebar = () => {
       </Box>
 
       {/* USER FOOTER */}
-      {user ? (
-        <HStack spacing={3} align="center" mt="auto" pt={4}>
-          <Avatar size="sm" name={`${user.name} ${user.lastName}`} />
-          <Box>
-            <Text fontWeight="bold" color="white">
-              {user.name} {user.lastName}
-            </Text>
-            <Text fontSize="sm" color="whiteAlpha.700">{user.email}</Text>
-          </Box>
-        </HStack>
-      ) : (
-        <Text fontSize="sm" mt={4} color="whiteAlpha.700">
-          Cargando usuario...
-        </Text>
-      )}
+      <Box mt={6}>
+        {user ? (
+          <HStack spacing={3} align="center">
+            <Avatar size="sm" name={`${user.name} ${user.lastName || ""}`} />
+            <Box>
+              <Text fontWeight="bold" color="white">
+                {user.name} {user.lastName || ""}
+              </Text>
+              <Text fontSize="sm" color="whiteAlpha.700">{user.email}</Text>
+            </Box>
+          </HStack>
+        ) : (
+          <Text fontSize="sm" color="whiteAlpha.700">
+            Cargando usuario...
+          </Text>
+        )}
 
-
-      <Box mt="auto">
         <Button
           leftIcon={<Icon as={LogOut} />}
           variant="ghost"
           colorScheme="black"
           w="full"
+          mt={4}
           onClick={handleLogout}
           justifyContent="flex-start"
         >
@@ -173,7 +175,7 @@ const NavItem = ({ to, icon, label }) => (
     py={2}
     gap={3}
     borderRadius="md"
-    _hover={{ bg: " #f77700" }}
+    _hover={{ bg: "#f77700" }}
     _activeLink={{ bg: "gray.800", fontWeight: "bold" }}
     w="full"
   >
