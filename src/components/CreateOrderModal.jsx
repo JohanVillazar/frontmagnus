@@ -76,7 +76,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const total = subtotal + taxAmount;
 
   const handleSubmit = async () => {
-    const userId = JSON.parse(localStorage.getItem("usuario"))?.id;
+    const userId = JSON.parse(localStorage.getItem("user"))?.id;
     const cashRegisterId = localStorage.getItem("cashRegisterId");
 
     try {

@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 
 const TicketParcialCaja = forwardRef(({ data }, ref) => {
 
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  const usuario = JSON.parse(localStorage.getItem('user'));
   const {
     fecha = new Date(),
     

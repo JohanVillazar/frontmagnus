@@ -73,7 +73,7 @@ const CreatePurchase = () => {
 
     const payload = {
       SucursalId: selectedSucursalId,
-      userId: JSON.parse(localStorage.getItem("usuario"))?.id,
+      userId: JSON.parse(localStorage.getItem("user"))?.id,
       totalAmount,
       status, // 🆕 enviamos status
       details: purchaseDetails.map(d => ({
