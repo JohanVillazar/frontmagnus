@@ -37,19 +37,20 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Sidebar = () => {
-  const [user, setUser] = useState({});
-
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("name", "lastName"));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) setUser(storedUser);
   }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/"); // react-router-dom
-  }
+    navigate("/");
+  };
+
   return (
     <Box
       w="250px"
