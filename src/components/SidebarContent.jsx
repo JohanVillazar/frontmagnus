@@ -1,7 +1,7 @@
 // components/SidebarContent.jsx
 import {
   Box, VStack, Accordion, AccordionItem, AccordionButton, AccordionIcon,
-  AccordionPanel, Text, HStack, Avatar, Button, Icon, Link
+  AccordionPanel, Text, HStack, Avatar, Button, Icon, Link, Flex
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, Package, Plus, ListChecks, Component, Warehouse, LogOut, Store, ClipboardList, Users, Truck, UserCog } from "lucide-react";
