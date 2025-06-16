@@ -1,83 +1,39 @@
+// components/SidebarContent.jsx
 import {
-  Box,
-  VStack,
-  Text,
-  HStack,
-  Link,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Avatar,
-
+  Box, VStack, Accordion, AccordionItem, AccordionButton, AccordionIcon,
+  AccordionPanel, Text, HStack, Avatar, Button, Icon, Link
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  ShoppingCart,
-  Package,
-  Users,
-  BarChart,
-  ClipboardList,
-  FileText,
-  Warehouse,
-  Store,
-  UserCog,
-  Plus,
-  List,
-  LogOut,
-  Truck,
-  Component,
-  ListChecks,
+import { LayoutDashboard, Package, Plus, ListChecks, Component, Warehouse, LogOut, Store, ClipboardList, Users, Truck, UserCog } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
-} from "lucide-react";
-import { Button, Icon } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+const SidebarContent = ({ onClose }) => {
+  const { user, logout } = useAuth();
 
-const Sidebar = () => {
-  const [user, setUser] = useState({});
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("usuario", "lastName"));
-    if (storedUser) setUser(storedUser);
-  }, []);
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/"); // react-router-dom
-  }
+    logout();
+    window.location.href = "/";
+  };
+
   return (
     <Box
-      w="250px"
+      w={{ base: "full", md: "250px" }}
       h="100vh"
       bg="#62189e"
       color="white"
       p={4}
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      position="fixed"
     >
-      {/* TOP SECTION */}
       <Box>
-        <Text fontSize="x2" fontWeight="bold" mb={6}>
+        <Text fontSize="xl" fontWeight="bold" mb={6}>
           Magnus Control
         </Text>
 
         <VStack align="start" spacing={2} w="full">
-          <NavItem icon={LayoutDashboard} to="/dashboard" label="Dashboard" />
+          <NavItem icon={LayoutDashboard} to="/dashboard" label="Dashboard" onClick={onClose} />
+
           <Accordion allowToggle w="full">
             <AccordionItem border="none">
-              <AccordionButton
-                _hover={{ bg: " #f77700" }}
-                px={3}
-                py={2}
-                borderRadius="md"
-              >
+              <AccordionButton _hover={{ bg: "#f77700" }} px={3} py={2} borderRadius="md">
                 <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
                   <Box as={Package} size="18px" />
                   <Text fontSize="sm">Productos y Recetas</Text>
@@ -86,11 +42,10 @@ const Sidebar = () => {
               </AccordionButton>
               <AccordionPanel px={3} pb={2}>
                 <VStack align="start" spacing={1}>
-                  <SubNavItem icon={Plus} to="/productos/nuevo" label="Crear Producto" />
-                  <SubNavItem icon={ListChecks} to="/listar" label="Existencias" />
-                  <SubNavItem icon={Plus} to="/combos/nuevo" label="Crear Receta" />
-                  <SubNavItem icon={Component} to="/combos" label="Listar Recetas" />
-
+                  <SubNavItem icon={Plus} to="/productos/nuevo" label="Crear Producto" onClick={onClose} />
+                  <SubNavItem icon={ListChecks} to="/listar" label="Existencias" onClick={onClose} />
+                  <SubNavItem icon={Plus} to="/combos/nuevo" label="Crear Receta" onClick={onClose} />
+                  <SubNavItem icon={Component} to="/combos" label="Listar Recetas" onClick={onClose} />
                 </VStack>
               </AccordionPanel>
             </AccordionItem>
@@ -98,12 +53,7 @@ const Sidebar = () => {
 
           <Accordion allowToggle w="full">
             <AccordionItem border="none">
-              <AccordionButton
-                _hover={{ bg: " #f77700" }}
-                px={3}
-                py={2}
-                borderRadius="md"
-              >
+              <AccordionButton _hover={{ bg: "#f77700" }} px={3} py={2} borderRadius="md">
                 <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
                   <Box as={Warehouse} size="18px" />
                   <Text fontSize="sm">Caja</Text>
@@ -112,35 +62,34 @@ const Sidebar = () => {
               </AccordionButton>
               <AccordionPanel px={3} pb={2}>
                 <VStack align="start" spacing={1}>
-                  <SubNavItem icon={Plus} to="/caja/abrir" label="Gestion de Caja" />
-                  <SubNavItem icon={LogOut} to="/caja/cerrar" label="Cerrar caja" />
+                  <SubNavItem icon={Plus} to="/caja/abrir" label="Gestión de Caja" onClick={onClose} />
+                  <SubNavItem icon={LogOut} to="/caja/cerrar" label="Cerrar Caja" onClick={onClose} />
                 </VStack>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
-          <NavItem icon={Store} to="/mesas" label="Mesas" />
-          <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" />
-          <NavItem icon={Users} to="/clientes" label="Clientes" />
-          <NavItem icon={Truck} to="/suppliers" label="Proveedores" />
-          <NavItem icon={UserCog} to="/users" label="Usuarios" />
+
+          <NavItem icon={Store} to="/mesas" label="Mesas" onClick={onClose} />
+          <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" onClick={onClose} />
+          <NavItem icon={Users} to="/clientes" label="Clientes" onClick={onClose} />
+          <NavItem icon={Truck} to="/suppliers" label="Proveedores" onClick={onClose} />
+          <NavItem icon={UserCog} to="/users" label="Usuarios" onClick={onClose} />
         </VStack>
       </Box>
 
-      {/* USER FOOTER */}
       <HStack spacing={3} align="center" mt="auto" pt={4}>
         <Avatar size="sm" name={user.name} />
         <Box>
           <Text fontWeight="bold" color="white">{user.name} {user.lastName}</Text>
-
           <Text fontSize="sm" color="whiteAlpha.700">{user.email}</Text>
         </Box>
       </HStack>
 
-      <Box mt="auto">
+      <Box mt="4">
         <Button
           leftIcon={<Icon as={LogOut} />}
           variant="ghost"
-          colorScheme="black"
+          colorScheme="whiteAlpha"
           w="full"
           onClick={handleLogout}
           justifyContent="flex-start"
@@ -152,7 +101,7 @@ const Sidebar = () => {
   );
 };
 
-const NavItem = ({ to, icon, label }) => (
+const NavItem = ({ to, icon, label, onClick }) => (
   <Link
     as={NavLink}
     to={to}
@@ -162,16 +111,17 @@ const NavItem = ({ to, icon, label }) => (
     py={2}
     gap={3}
     borderRadius="md"
-    _hover={{ bg: " #f77700" }}
+    _hover={{ bg: "#f77700" }}
     _activeLink={{ bg: "gray.800", fontWeight: "bold" }}
     w="full"
+    onClick={onClick}
   >
     <Box as={icon} size="18px" />
     <Text fontSize="sm">{label}</Text>
   </Link>
 );
 
-const SubNavItem = ({ to, icon, label }) => (
+const SubNavItem = ({ to, icon, label, onClick }) => (
   <Link
     as={NavLink}
     to={to}
@@ -185,11 +135,12 @@ const SubNavItem = ({ to, icon, label }) => (
     _hover={{ bg: "gray.700" }}
     _activeLink={{ bg: "gray.700", fontWeight: "bold" }}
     w="full"
+    onClick={onClick}
   >
     <Box as={icon} size="16px" />
     {label}
   </Link>
 );
 
-export default Sidebar;
+export default SidebarContent;
 

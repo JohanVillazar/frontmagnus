@@ -18,6 +18,7 @@ import UserPage from "./pages/UserPage";
 import ComboListPage from "./pages/ComboListPage";
 import CreateComboPage from "./pages/CreateComboPage";
 import RegisterForm from "./pages/RegisterForm";
+import SidebarContent from "./components/SidebarContent";
 
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SessionExpiredProvider, useSessionExpired } from './context/SessionExpiredContext';
@@ -52,13 +53,35 @@ function SessionExpiredModal() {
 }
 
 function AppContent() {
-  const location = useLocation();
+ const location = useLocation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const hideSidebar = location.pathname === "/" || location.pathname === "/register";
 
   return (
     <Flex minH="100vh">
-      {!hideSidebar && <Sidebar />}
-      <Box flex="1" p={4}>
+      {!hideSidebar && (
+        <>
+          {/* Mobile Drawer */}
+          <Drawer isOpen={isOpen} placement="left" onClose={onClose} returnFocusOnClose={false} onOverlayClick={onClose}>
+            <DrawerContent>
+              <SidebarContent onClose={onClose} />
+            </DrawerContent>
+          </Drawer>
+
+          {/* Desktop Sidebar */}
+          <Box display={{ base: "none", md: "block" }}>
+            <SidebarContent />
+          </Box>
+        </>
+      )}
+
+      <Box flex="1" p={4} w="full">
+        {/* Mobile menu button */}
+        {!hideSidebar && (
+          <Box mb={4} display={{ base: "block", md: "none" }}>
+            <IconButton icon={<FiMenu />} onClick={onOpen} variant="outline" colorScheme="purple" />
+          </Box>
+        )}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<RegisterForm />} />
@@ -80,7 +103,9 @@ function AppContent() {
       </Box>
     </Flex>
   );
-}
+} 
+
+
 
 function InterceptorWrapper() {
   const { triggerSessionExpired } = useSessionExpired();
