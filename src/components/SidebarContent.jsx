@@ -9,9 +9,6 @@ import { useAuth } from "../context/AuthContext";
 
 const SidebarContent = ({ onClose }) => {
   const { user, logout } = useAuth();
-  if (!user) {
-  return <Text>Cargando usuario...</Text>;
-}
 
 
   const handleLogout = () => {
