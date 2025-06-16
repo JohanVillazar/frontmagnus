@@ -20,76 +20,84 @@ const SidebarContent = ({ onClose }) => {
   };
 
   return (
-    <Box
-      w={{ base: "full", md: "250px" }}
+    <Flex
+      direction="column"
       h="100vh"
+      w={{ base: "full", md: "250px" }}
       bg="#62189e"
       color="white"
       p={4}
     >
-      <Box>
-        <Text fontSize="xl" fontWeight="bold" mb={6}>
+      {/* Parte superior */}
+      <Box mb={6}>
+        <Text fontSize="xl" fontWeight="bold">
           Magnus Control
         </Text>
-
-        <VStack align="start" spacing={2} w="full">
-          <NavItem icon={LayoutDashboard} to="/dashboard" label="Dashboard" onClick={onClose} />
-
-          <Accordion allowToggle w="full">
-            <AccordionItem border="none">
-              <AccordionButton _hover={{ bg: "#f77700" }} px={3} py={2} borderRadius="md">
-                <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
-                  <Box as={Package} size="18px" />
-                  <Text fontSize="sm">Productos y Recetas</Text>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel px={3} pb={2}>
-                <VStack align="start" spacing={1}>
-                  <SubNavItem icon={Plus} to="/productos/nuevo" label="Crear Producto" onClick={onClose} />
-                  <SubNavItem icon={ListChecks} to="/listar" label="Existencias" onClick={onClose} />
-                  <SubNavItem icon={Plus} to="/combos/nuevo" label="Crear Receta" onClick={onClose} />
-                  <SubNavItem icon={Component} to="/combos" label="Listar Recetas" onClick={onClose} />
-                </VStack>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-
-          <Accordion allowToggle w="full">
-            <AccordionItem border="none">
-              <AccordionButton _hover={{ bg: "#f77700" }} px={3} py={2} borderRadius="md">
-                <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
-                  <Box as={Warehouse} size="18px" />
-                  <Text fontSize="sm">Caja</Text>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel px={3} pb={2}>
-                <VStack align="start" spacing={1}>
-                  <SubNavItem icon={Plus} to="/caja/abrir" label="Gestión de Caja" onClick={onClose} />
-                  <SubNavItem icon={LogOut} to="/caja/cerrar" label="Cerrar Caja" onClick={onClose} />
-                </VStack>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-
-          <NavItem icon={Store} to="/mesas" label="Mesas" onClick={onClose} />
-          <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" onClick={onClose} />
-          <NavItem icon={Users} to="/clientes" label="Clientes" onClick={onClose} />
-          <NavItem icon={Truck} to="/suppliers" label="Proveedores" onClick={onClose} />
-          <NavItem icon={UserCog} to="/users" label="Usuarios" onClick={onClose} />
-        </VStack>
       </Box>
 
-      <HStack spacing={3} align="center" mt="auto" pt={4}>
-        <Avatar size="sm" name={user.name} />
-        <Box>
-          <Text fontWeight="bold" color="white">{user.name} {user.lastName}</Text>
-          <Text fontSize="sm" color="whiteAlpha.700">{user.email}</Text>
-        </Box>
-      </HStack>
+      {/* Menú de navegación */}
+      <VStack align="start" spacing={2} w="full" flex="1" overflowY="auto">
+        <NavItem icon={LayoutDashboard} to="/dashboard" label="Dashboard" onClick={onClose} />
 
-      <Box mt="4">
+        <Accordion allowToggle w="full">
+          <AccordionItem border="none">
+            <AccordionButton _hover={{ bg: "#f77700" }} px={3} py={2} borderRadius="md">
+              <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
+                <Box as={Package} size="18px" />
+                <Text fontSize="sm">Productos y Recetas</Text>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel px={3} pb={2}>
+              <VStack align="start" spacing={1}>
+                <SubNavItem icon={Plus} to="/productos/nuevo" label="Crear Producto" onClick={onClose} />
+                <SubNavItem icon={ListChecks} to="/listar" label="Existencias" onClick={onClose} />
+                <SubNavItem icon={Plus} to="/combos/nuevo" label="Crear Receta" onClick={onClose} />
+                <SubNavItem icon={Component} to="/combos" label="Listar Recetas" onClick={onClose} />
+              </VStack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion allowToggle w="full">
+          <AccordionItem border="none">
+            <AccordionButton _hover={{ bg: "#f77700" }} px={3} py={2} borderRadius="md">
+              <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
+                <Box as={Warehouse} size="18px" />
+                <Text fontSize="sm">Caja</Text>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel px={3} pb={2}>
+              <VStack align="start" spacing={1}>
+                <SubNavItem icon={Plus} to="/caja/abrir" label="Gestión de Caja" onClick={onClose} />
+                <SubNavItem icon={LogOut} to="/caja/cerrar" label="Cerrar Caja" onClick={onClose} />
+              </VStack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+
+        <NavItem icon={Store} to="/mesas" label="Mesas" onClick={onClose} />
+        <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" onClick={onClose} />
+        <NavItem icon={Users} to="/clientes" label="Clientes" onClick={onClose} />
+        <NavItem icon={Truck} to="/suppliers" label="Proveedores" onClick={onClose} />
+        <NavItem icon={UserCog} to="/users" label="Usuarios" onClick={onClose} />
+      </VStack>
+
+      {/* Usuario y botón de salir */}
+      <Box mt={4}>
+        <HStack spacing={3} align="center" mb={2}>
+          <Avatar size="sm" name={user?.name} />
+          <Box>
+            <Text fontWeight="bold" color="white">
+              {user?.name} {user?.lastName}
+            </Text>
+            <Text fontSize="sm" color="whiteAlpha.700">
+              {user?.email}
+            </Text>
+          </Box>
+        </HStack>
+
         <Button
           leftIcon={<Icon as={LogOut} />}
           variant="ghost"
@@ -101,7 +109,7 @@ const SidebarContent = ({ onClose }) => {
           Cerrar sesión
         </Button>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 
@@ -145,6 +153,7 @@ const SubNavItem = ({ to, icon, label, onClick }) => (
     {label}
   </Link>
 );
+
 
 export default SidebarContent;
 

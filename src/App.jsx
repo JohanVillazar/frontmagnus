@@ -59,51 +59,81 @@ function AppContent() {
   const hideSidebar = location.pathname === "/" || location.pathname === "/register";
 
   return (
-    <Flex minH="100vh">
-      {!hideSidebar && (
-        <>
-          {/* Mobile Drawer */}
-          <Drawer isOpen={isOpen} placement="left" onClose={onClose} returnFocusOnClose={false} onOverlayClick={onClose}>
-            <DrawerContent>
-              <SidebarContent onClose={onClose} />
-            </DrawerContent>
-          </Drawer>
+  <Box minH="100vh">
+    {/* Sidebar fijo para desktop */}
+    {!hideSidebar && (
+      <Box
+        as="aside"
+        w="250px"
+        h="100vh"
+        position="fixed"
+        top="0"
+        left="0"
+        display={{ base: "none", md: "block" }}
+        zIndex="100"
+        bg="#62189e"
+        color="white"
+      >
+        <SidebarContent />
+      </Box>
+    )}
 
-          {/* Desktop Sidebar */}
-          <Box display={{ base: "none", md: "block" }}>
-            <SidebarContent />
-          </Box>
-        </>
+    {/* Drawer para móviles */}
+    {!hideSidebar && (
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        returnFocusOnClose={false}
+        onOverlayClick={onClose}
+      >
+        <DrawerContent>
+          <SidebarContent onClose={onClose} />
+        </DrawerContent>
+      </Drawer>
+    )}
+
+    {/* Contenido principal */}
+    <Box
+      ml={{ base: 0, md: hideSidebar ? 0 : "250px" }}
+      p={4}
+      transition="margin-left 0.3s"
+    >
+      {/* Botón de menú solo en mobile */}
+      {!hideSidebar && (
+        <Box mb={4} display={{ base: "block", md: "none" }}>
+          <IconButton
+            icon={<FiMenu />}
+            onClick={onOpen}
+            variant="outline"
+            colorScheme="purple"
+            aria-label="Abrir menú"
+          />
+        </Box>
       )}
 
-      <Box flex="1" p={4} w="full">
-        {/* Mobile menu button */}
-        {!hideSidebar && (
-          <Box mb={4} display={{ base: "block", md: "none" }}>
-            <IconButton icon={<FiMenu />} onClick={onOpen} variant="outline" colorScheme="purple" />
-          </Box>
-        )}
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/productos/nuevo" element={<ProductCreatePage />} />
-          <Route path="/listar" element={<ProductList />} />
-          <Route path="/caja/abrir" element={<CashOpenPage />} />
-          <Route path="/caja/cerrar" element={<CashClosePage />} />
-          <Route path="/ventas" element={<SalesPage />} />
-          <Route path="/mesas" element={<TablesPage />} />
-          <Route path="/reservar-mesa" element={<ReserveTableModal />} />
-          <Route path="/compras/nueva" element={<CreatePurchase />} />
-          <Route path="/suppliers" element={<SupplierPage />} />
-          <Route path="/users" element={<UserPage />} />
-          <Route path="/combos" element={<ComboListPage />} />
-          <Route path="/combos/nuevo" element={<CreateComboPage />} />
-        </Routes>
-        <SessionExpiredModal />
-      </Box>
-    </Flex>
-  );
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/productos/nuevo" element={<ProductCreatePage />} />
+        <Route path="/listar" element={<ProductList />} />
+        <Route path="/caja/abrir" element={<CashOpenPage />} />
+        <Route path="/caja/cerrar" element={<CashClosePage />} />
+        <Route path="/ventas" element={<SalesPage />} />
+        <Route path="/mesas" element={<TablesPage />} />
+        <Route path="/reservar-mesa" element={<ReserveTableModal />} />
+        <Route path="/compras/nueva" element={<CreatePurchase />} />
+        <Route path="/suppliers" element={<SupplierPage />} />
+        <Route path="/users" element={<UserPage />} />
+        <Route path="/combos" element={<ComboListPage />} />
+        <Route path="/combos/nuevo" element={<CreateComboPage />} />
+      </Routes>
+
+      <SessionExpiredModal />
+    </Box>
+  </Box>
+);
 } 
 
 
