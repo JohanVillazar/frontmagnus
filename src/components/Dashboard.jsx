@@ -131,7 +131,7 @@ const Dashboard = () => {
   }), []);
 
   return (
-    <Box p={{ base: 4, md: 8 }} ml={{ base: 0, md: "90px" }}>
+    <Box p={{ base: 4, md: 8 }}>
       <Heading mb={6}>Dashboard</Heading>
 
       <Grid
