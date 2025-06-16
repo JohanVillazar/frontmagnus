@@ -58,6 +58,14 @@ function AppContent() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const hideSidebar = location.pathname === "/" || location.pathname === "/register";
 
+    if (isLoading) {
+    return (
+      <Box minH="100vh" display="flex" alignItems="center" justifyContent="center">
+        <Text fontWeight="bold" color="purple.600">Cargando usuario...</Text>
+      </Box>
+    );
+  }
+
   return (
   <Box minH="100vh">
     {/* Sidebar fijo para desktop */}
