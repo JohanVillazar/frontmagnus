@@ -29,6 +29,7 @@ import {
   Users,
   Truck,
   UserCog,
+  Hotel
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -125,8 +126,9 @@ const Sidebar = () => {
           <NavItem icon={Store} to="/mesas" label="Mesas" />
           <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" />
           <NavItem icon={Users} to="/clientes" label="Clientes" />
+          <NavItem icon={Users} to="/sucursales" label="crear" />
           <NavItem icon={Truck} to="/suppliers" label="Proveedores" />
-          <NavItem icon={UserCog} to="/users" label="Usuarios" />
+          <NavItem icon={Hotel} to="/users" label="Usuarios" />
         </VStack>
       </Box>
 

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import { Box, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button,useDisclosure,Drawer,DrawerContent,IconButton,Text} from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { useEffect } from "react";
-
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
 import Login from "./pages/Login";
@@ -20,6 +19,7 @@ import ComboListPage from "./pages/ComboListPage";
 import CreateComboPage from "./pages/CreateComboPage";
 import RegisterForm from "./pages/RegisterForm";
 import SidebarContent from "./components/SidebarContent";
+import CreateSucursalForm from "./components/CreateSucursalForm";
 
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SessionExpiredProvider, useSessionExpired } from './context/SessionExpiredContext';
@@ -130,6 +130,7 @@ function AppContent() {
         <Route path="/users" element={<UserPage />} />
         <Route path="/combos" element={<ComboListPage />} />
         <Route path="/combos/nuevo" element={<CreateComboPage />} />
+        <Route path="/sucursales" element={<CreateSucursalForm />} />
       </Routes>
 
       <SessionExpiredModal />
