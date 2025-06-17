@@ -19,8 +19,7 @@ import {
 const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const [products, setProducts] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
-  const [taxPercent, setTaxPercent] = useState(0);
-  const toast = useToast();
+    const toast = useToast();
 
   useEffect(() => {
     const fetchCombos = async () => {
@@ -48,8 +47,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
     if (isOpen) {
       fetchCombos();
       setOrderItems([]);
-      setTaxPercent(0);
-    }
+          }
   }, [isOpen]);
 
   const handleAddCombo = (combo) => {
@@ -72,8 +70,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   };
 
   const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const taxAmount = (subtotal * (taxPercent / 100));
-  const total = subtotal + taxAmount;
+  const total = subtotal;
 
   const handleSubmit = async () => {
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
@@ -132,21 +129,10 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
               )}
               <Box mt={6}>
                 <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
-                <Text mt={2}>
-                  <strong>Impuesto IVA:</strong>{" "}
-                  <Input
-                    type="number"
-                    size="sm"
-                    width="80px"
-                    value={taxPercent}
-                    onChange={(e) => setTaxPercent(Number(e.target.value))}
-                    display="inline-block"
-                    mr={2}
-                  />
-                  = ${taxAmount.toLocaleString()}
-                </Text>
+                <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
                 <Text><strong>Costos de envío:</strong> $0</Text>
                 <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
+                </Box>
               </Box>
               <Button mt={4} colorScheme="green" onClick={handleSubmit}>
                 Agregar Pedido a Mesa
