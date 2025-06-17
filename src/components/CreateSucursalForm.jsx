@@ -73,6 +73,9 @@ const CreateSucursalForm = () => {
 
   return (
     <Box p={4} maxW="600px" mx="auto">
+      <Heading size="lg" mb={6} textAlign="center">
+        Crear Sucursales
+      </Heading>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
           <FormControl isRequired>

@@ -77,7 +77,7 @@ const SidebarContent = ({ onClose }) => {
         <NavItem icon={Store} to="/mesas" label="Mesas" onClick={onClose} />
         <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" onClick={onClose} />
         <NavItem icon={Users} to="/clientes" label="Clientes" onClick={onClose} />
-        <NavItem icon={Hotel} to="/sucursales" label="crear" />
+        <NavItem icon={Hotel} to="/sucursales" label="Sucursales" />
         <NavItem icon={Truck} to="/suppliers" label="Proveedores" onClick={onClose} />
         <NavItem icon={UserCog} to="/users" label="Usuarios" onClick={onClose} />
       </VStack>
