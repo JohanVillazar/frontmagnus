@@ -79,7 +79,7 @@ const handleSubmit = async () => {
   if (!cashRegisterId) {
     toast({
       title: "Error",
-      description: "No hay caja abierta. Por favor, abre una caja antes de registrar un pedido.",
+      description: "No hay caja abierta.Abre una caja antes de registrar un pedido.",
       status: "error",
     });
     return;
@@ -109,7 +109,7 @@ const handleSubmit = async () => {
     toast({ title: "Pedido creado exitosamente", status: "success" });
     onOrderSuccess?.();
   } catch (err) {
-    toast({ title: "Error", description: err.message, status: "Falta un ingrediente en la receta o inventario" });
+    toast({ title: "Error", description: err.message || "Falta un ingrediente en la receta o inventario" });
   }
 };
 
