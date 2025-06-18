@@ -44,7 +44,7 @@ import {
       }
   
       try {
-        const res = await fetch("https://backmagnus-production.up.railway.app/api/suppliers", {
+        const res = await fetch("https://backmagnus-production.up.railway.app/api/suppliers/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
