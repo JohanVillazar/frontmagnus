@@ -109,7 +109,7 @@ const handleSubmit = async () => {
     toast({ title: "Pedido creado exitosamente", status: "success" });
     onOrderSuccess?.();
   } catch (err) {
-    toast({ title: "Error", description: err.message, status: "error" });
+    toast({ title: "Error", description: err.message, status: "Falta un ingrediente en la receta o inventario" });
   }
 };
 
