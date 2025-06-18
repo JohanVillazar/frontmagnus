@@ -21,6 +21,7 @@ import RegisterForm from "./pages/RegisterForm";
 import SidebarContent from "./components/SidebarContent";
 import CreateSucursalForm from "./components/CreateSucursalForm";
 import CreateCustomerForm from "./components/CreateCustomerForm";
+import Tutoriales from "./pages/Tutoriales";
 
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SessionExpiredProvider, useSessionExpired } from './context/SessionExpiredContext';
@@ -133,6 +134,7 @@ function AppContent() {
         <Route path="/combos/nuevo" element={<CreateComboPage />} />
         <Route path="/sucursales" element={<CreateSucursalForm />} />
         <Route path="/clientes" element={<CreateCustomerForm />} />
+        <Route path="/tutoriales" element={<Tutoriales />} />
       </Routes>
 
       <SessionExpiredModal />
