@@ -74,9 +74,7 @@ const handleLogin = async () => {
             </FormControl>
             <Flex justify="space-between" align="center">
               <Checkbox>Recordarme</Checkbox>
-              <Link as={RouterLink} to="/register" color="orange.500">
-                Registrarse
-              </Link>
+             
             </Flex>
             <Button colorScheme="orange" onClick={handleLogin}>
               Iniciar sesión
