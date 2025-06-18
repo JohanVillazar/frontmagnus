@@ -72,51 +72,61 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const total = subtotal;
 
-  const handleSubmit = async () => {
-    const userId = JSON.parse(localStorage.getItem("user"))?.id;
-    const cashRegisterId = localStorage.getItem("cashRegisterId");
+const handleSubmit = async () => {
+  const userId = JSON.parse(localStorage.getItem("user"))?.id;
+  const cashRegisterId = localStorage.getItem("cashRegisterId");
 
-    try {
-      const res = await fetch("https://backmagnus-production.up.railway.app/api/order/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          tableId: table.id,
-          userId,
-          cashRegisterId,
-          products: orderItems.map(item => ({
-            variantId: item.variantId,
-            quantity: item.quantity
-          }))
-        }),
-      });
+  if (!cashRegisterId) {
+    toast({
+      title: "Error",
+      description: "No hay caja abierta. Por favor, abre una caja antes de registrar un pedido.",
+      status: "error",
+    });
+    return;
+  }
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || "Falta un ingrediente en la receta o inventario");
+  try {
+    const res = await fetch("https://backmagnus-production.up.railway.app/api/order/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        tableId: table.id,
+        userId,
+        cashRegisterId,
+        products: orderItems.map(item => ({
+          variantId: item.variantId,
+          quantity: item.quantity
+        }))
+      }),
+    });
 
-      toast({ title: "Pedido creado exitosamente", status: "success" });
-      onOrderSuccess?.();
-    } catch (err) {
-      toast({ title: "Error", description: err.message, status: "error" });
-    }
-  };
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.msg || "Falta un ingrediente en la receta o inventario");
+
+    toast({ title: "Pedido creado exitosamente", status: "success" });
+    onOrderSuccess?.();
+  } catch (err) {
+    toast({ title: "Error", description: err.message, status: "error" });
+  }
+};
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="5xl">
       <ModalOverlay />
       <ModalContent maxW={{ base: "100%", md: "5xl" }} p={{ base: 4, md: 8}}>
-        <ModalHeader>Nuevo Pedido - Mesa {table?.number}</ModalHeader>
+        <ModalHeader>Crear Pedido - Mesa {table?.number}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
             {/* Resumen Pedido */}
             <Box>
-              <Text fontWeight="bold" mb={3}>Combos Agregados:</Text>
+              <Text fontWeight="bold" mb={3}>Productos Agregados:</Text>
               {orderItems.length === 0 ? (
-                <Text color="gray.500">No hay combos aún</Text>
+                <Text color="gray.500">No hay productos aún</Text>
               ) : (
                 <VStack align="start" spacing={2}>
                   {orderItems.map((item, idx) => (
