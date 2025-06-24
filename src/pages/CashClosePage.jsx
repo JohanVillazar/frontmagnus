@@ -55,7 +55,7 @@ const CashClosePage = ({ onCloseSuccess }) => {
   });
 
   return (
-    <Box p={{ base: 4, md: 8 }}>
+    <Box ml="110px" p={6}>
       <Heading size="lg" mb={6}>
         Cierre de Caja
       </Heading>
