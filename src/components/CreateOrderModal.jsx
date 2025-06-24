@@ -19,6 +19,7 @@ import {
 const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const [products, setProducts] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
     const toast = useToast();
 
   useEffect(() => {
@@ -114,6 +115,10 @@ const handleSubmit = async () => {
 };
 
 
+  const filteredProducts = products.filter((combo) =>
+    combo.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="5xl">
       <ModalOverlay />
@@ -121,6 +126,12 @@ const handleSubmit = async () => {
         <ModalHeader>Crear Pedido - Mesa {table?.number}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <Input
+            placeholder="Buscar producto"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            mb={4}
+          />
           <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
             {/* Resumen Pedido */}
             <Box>
@@ -151,7 +162,7 @@ const handleSubmit = async () => {
 
             {/* Combos Disponibles */}
             <Grid templateColumns="repeat(auto-fit, minmax(160px, 1fr))" gap={2}>
-              {products.map((combo) => (
+              {filteredProducts.map((combo) => (
                 <Box
                   key={combo.variantId}
                   bg="gray.100"
