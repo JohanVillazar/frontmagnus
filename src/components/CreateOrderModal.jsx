@@ -114,7 +114,7 @@ const handleSubmit = async () => {
   }
 };
 
- const filteredProducts = products.filter((product) =>
+    const filteredProducts = products.filter((product) =>
     product.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     product.variantId.toString().includes(searchQuery)
   );
@@ -129,7 +129,7 @@ const handleSubmit = async () => {
            <Input
                 placeholder="Buscar por nombre o código"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => filteredProducts(e.target.value)}
                 mb={4}
               />
         <ModalBody>
