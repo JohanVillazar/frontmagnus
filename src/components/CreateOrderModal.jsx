@@ -156,14 +156,13 @@ const handleSubmit = async () => {
             </Box>
 
             {/* Combos Disponibles */}
-                <Box>
               <Input
                 placeholder="Buscar por nombre o código"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 mb={4}
               />
-            </Box>
+          
             <Grid templateColumns="repeat(auto-fit, minmax(160px, 1fr))" gap={2}>
               {products.map((combo) => (
                 <Box
