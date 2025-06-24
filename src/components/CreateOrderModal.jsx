@@ -126,6 +126,12 @@ const handleSubmit = async () => {
       <ModalContent maxW={{ base: "100%", md: "5xl" }} p={{ base: 4, md: 8}}>
         <ModalHeader>Crear Pedido - Mesa {table?.number}</ModalHeader>
         <ModalCloseButton />
+           <Input
+                placeholder="Buscar por nombre o código"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                mb={4}
+              />
         <ModalBody>
           <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
             {/* Resumen Pedido */}
@@ -156,12 +162,7 @@ const handleSubmit = async () => {
             </Box>
 
             {/* Combos Disponibles */}
-              <Input
-                placeholder="Buscar por nombre o código"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                mb={4}
-              />
+           
           
             <Grid templateColumns="repeat(auto-fit, minmax(160px, 1fr))" gap={2}>
               {products.map((combo) => (
