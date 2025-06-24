@@ -19,6 +19,7 @@ import {
 const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const [products, setProducts] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
     const toast = useToast();
 
   useEffect(() => {
@@ -112,6 +113,11 @@ const handleSubmit = async () => {
     toast({ title: "Error", description: err.message || "Falta un ingrediente en la receta o inventario" });
   }
 };
+
+ const filteredProducts = products.filter((product) =>
+    product.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.variantId.toString().includes(searchQuery)
+  );
 
 
   return (
