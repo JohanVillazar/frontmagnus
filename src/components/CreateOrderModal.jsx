@@ -154,7 +154,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
                   {orderItems.map((item, idx) => (
                     <HStack key={idx} justify="space-between" w="100%">
                       <Text>
-                        {item.variantName} - {item.productName} x {item.quantity} = $
+                        {item.productName} x {item.quantity} = $
                         {(item.price * item.quantity).toLocaleString()}
                       </Text>
                       <IconButton
