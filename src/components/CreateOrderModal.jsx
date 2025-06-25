@@ -15,6 +15,8 @@ import {
   useToast,
   Badge,
   CloseIcon,
+  HStack,
+  IconButton
 } from "@chakra-ui/react";
 
 const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
@@ -169,7 +171,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
 
   <Box mt={6}>
     <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
-    <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
+    <Box borderTop="1px solidrgb(214, 194, 230)" mt={4} pt={4}>
       <Text><strong>Costos de envío:</strong> $0</Text>
       <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
     </Box>
