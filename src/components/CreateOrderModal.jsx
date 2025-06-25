@@ -13,7 +13,8 @@ import {
   Text,
   VStack,
   useToast,
-  Badge
+  Badge,
+  CloseIcon,
 } from "@chakra-ui/react";
 
 const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
@@ -124,6 +125,11 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
     // || combo.code?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleRemoveItem = (variantId) => {
+  setOrderItems(orderItems.filter(item => item.variantId !== variantId));
+};
+
+
   return (
   <Modal isOpen={isOpen} onClose={onClose} size="5xl">
     <ModalOverlay />
@@ -135,31 +141,45 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
         <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
           
           {/* Resumen Pedido (Columna izquierda) */}
-          <Box>
-            <Text fontWeight="bold" mb={3}>Productos Agregados:</Text>
-            {orderItems.length === 0 ? (
-              <Text color="gray.500">No hay productos aún</Text>
-            ) : (
-              <VStack align="start" spacing={2}>
-                {orderItems.map((item, idx) => (
-                  <Text key={idx}>
-                    {item.variantName} - {item.productName} x {item.quantity} = $
-                    {(item.price * item.quantity).toLocaleString()}
-                  </Text>
-                ))}
-              </VStack>
-            )}
-            <Box mt={6}>
-              <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
-              <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
-                <Text><strong>Costos de envío:</strong> $0</Text>
-                <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
-              </Box>
-            </Box>
-            <Button mt={4} colorScheme="green" onClick={handleSubmit}>
-              Agregar Pedido a Mesa
-            </Button>
-          </Box>
+            <Box>
+              <Text fontWeight="bold" mb={3}>Productos Agregados:</Text>
+
+              {orderItems.length === 0 ? (
+                <Text color="gray.500">No hay productos aún</Text>
+              ) : (
+                <VStack align="start" spacing={2} w="100%">
+                  {orderItems.map((item, idx) => (
+                    <HStack key={idx} justify="space-between" w="100%">
+                      <Text>
+                        {item.variantName} - {item.productName} x {item.quantity} = $
+                        {(item.price * item.quantity).toLocaleString()}
+                      </Text>
+                      <IconButton
+                        icon={<CloseIcon />}
+                        size="xs"
+                        colorScheme="red"
+                        variant="ghost"
+                        aria-label="Eliminar"
+                        onClick={() => handleRemoveItem(item.variantId)}
+                      />
+                    </HStack>
+                  ))}
+                </VStack>
+              )}
+
+  <Box mt={6}>
+    <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
+    <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
+      <Text><strong>Costos de envío:</strong> $0</Text>
+      <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
+    </Box>
+  </Box>
+
+  <Button mt={4} colorScheme="green" onClick={handleSubmit}>
+    Agregar Pedido a Mesa
+  </Button>
+</Box>
+ 
 
           {/* Sección de combos (Columna derecha) */}
           <Box>
