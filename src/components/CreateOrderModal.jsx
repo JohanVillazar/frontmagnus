@@ -135,7 +135,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           mb={4}
-          maxW="150px" // Ajusta el ancho deseado
+          maxW="300px" // Ajusta el ancho deseado
           mx="auto"
         />
         <ModalBody>
