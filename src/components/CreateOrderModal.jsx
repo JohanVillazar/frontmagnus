@@ -125,49 +125,54 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   );
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="5xl">
-      <ModalOverlay />
-      <ModalContent maxW={{ base: "100%", md: "5xl" }} p={{ base: 4, md: 8 }}>
-        <ModalHeader>Crear Pedido - Mesa {table?.number}</ModalHeader>
-        <ModalCloseButton />
-        <Input
-          placeholder="Buscar por nombre o código"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          mb={4}
-          maxW="300px" // Ajusta el ancho deseado
-          mx="auto"
-        />
-        <ModalBody>
-          <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
-            {/* Resumen Pedido */}
-            <Box>
-              <Text fontWeight="bold" mb={3}>Productos Agregados:</Text>
-              {orderItems.length === 0 ? (
-                <Text color="gray.500">No hay productos aún</Text>
-              ) : (
-                <VStack align="start" spacing={2}>
-                  {orderItems.map((item, idx) => (
-                    <Text key={idx}>
-                      {item.variantName} - {item.productName} x {item.quantity} = $
-                      {(item.price * item.quantity).toLocaleString()}
-                    </Text>
-                  ))}
-                </VStack>
-              )}
-              <Box mt={6}>
-                <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
-                <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
-                  <Text><strong>Costos de envío:</strong> $0</Text>
-                  <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
-                </Box>
+  <Modal isOpen={isOpen} onClose={onClose} size="5xl">
+    <ModalOverlay />
+    <ModalContent maxW={{ base: "100%", md: "5xl" }} p={{ base: 4, md: 8 }}>
+      <ModalHeader>Crear Pedido - Mesa {table?.number}</ModalHeader>
+      <ModalCloseButton />
+      
+      <ModalBody>
+        <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
+          
+          {/* Resumen Pedido (Columna izquierda) */}
+          <Box>
+            <Text fontWeight="bold" mb={3}>Productos Agregados:</Text>
+            {orderItems.length === 0 ? (
+              <Text color="gray.500">No hay productos aún</Text>
+            ) : (
+              <VStack align="start" spacing={2}>
+                {orderItems.map((item, idx) => (
+                  <Text key={idx}>
+                    {item.variantName} - {item.productName} x {item.quantity} = $
+                    {(item.price * item.quantity).toLocaleString()}
+                  </Text>
+                ))}
+              </VStack>
+            )}
+            <Box mt={6}>
+              <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
+              <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
+                <Text><strong>Costos de envío:</strong> $0</Text>
+                <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
               </Box>
-              <Button mt={4} colorScheme="green" onClick={handleSubmit}>
-                Agregar Pedido a Mesa
-              </Button>
             </Box>
+            <Button mt={4} colorScheme="green" onClick={handleSubmit}>
+              Agregar Pedido a Mesa
+            </Button>
+          </Box>
 
-            {/* Combos filtrados */}
+          {/* Sección de combos (Columna derecha) */}
+          <Box>
+            {/* Input de búsqueda SOLO dentro del ancho de la columna */}
+            <Input
+              placeholder="Buscar por nombre o código"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              mb={4}
+              w="100%"
+            />
+
+            {/* Lista de combos filtrados */}
             <Grid templateColumns="repeat(auto-fit, minmax(160px, 1fr))" gap={2}>
               {filteredProducts.map((combo) => (
                 <Box
@@ -184,11 +189,15 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
                 </Box>
               ))}
             </Grid>
-          </Grid>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
-  );
+          </Box>
+        </Grid>
+      </ModalBody>
+    </ModalContent>
+  </Modal>
+);
+
+
+ 
 };
 
 export default CreateOrderModal;
