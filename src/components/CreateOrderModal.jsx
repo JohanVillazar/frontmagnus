@@ -135,6 +135,8 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           mb={4}
+          maxW="150px" // Ajusta el ancho deseado
+          mx="auto"
         />
         <ModalBody>
           <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
