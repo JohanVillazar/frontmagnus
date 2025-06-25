@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { CloseIcon } from "@chakra-ui/icons";
+
 import {
   Box,
   Button,
@@ -14,7 +16,6 @@ import {
   VStack,
   useToast,
   Badge,
-  CloseIcon,
   HStack,
   IconButton
 } from "@chakra-ui/react";
