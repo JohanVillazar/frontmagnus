@@ -20,7 +20,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const [products, setProducts] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-    const toast = useToast();
+  const toast = useToast();
 
   useEffect(() => {
     const fetchCombos = async () => {
@@ -37,6 +37,8 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
           productName: combo.name,
           variantName: "Combo",
           priceperUnit: parseFloat(combo.price),
+          // Puedes incluir combo.code si existe
+          // code: combo.code
         }));
 
         setProducts(transformed);
@@ -48,7 +50,7 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
     if (isOpen) {
       fetchCombos();
       setOrderItems([]);
-          }
+    }
   }, [isOpen]);
 
   const handleAddCombo = (combo) => {
@@ -73,65 +75,67 @@ const CreateOrderModal = ({ isOpen, onClose, table, onOrderSuccess }) => {
   const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const total = subtotal;
 
-const handleSubmit = async () => {
-  const userId = JSON.parse(localStorage.getItem("user"))?.id;
-  const cashRegisterId = localStorage.getItem("cashRegisterId");
+  const handleSubmit = async () => {
+    const userId = JSON.parse(localStorage.getItem("user"))?.id;
+    const cashRegisterId = localStorage.getItem("cashRegisterId");
 
-  if (!cashRegisterId) {
-    toast({
-      title: "Error",
-      description: "No hay caja abierta.Abre una caja antes de registrar un pedido.",
-      status: "error",
-    });
-    return;
-  }
+    if (!cashRegisterId) {
+      toast({
+        title: "Error",
+        description: "No hay caja abierta. Abre una caja antes de registrar un pedido.",
+        status: "error",
+      });
+      return;
+    }
 
-  try {
-    const res = await fetch("https://backmagnus-production.up.railway.app/api/order/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        tableId: table.id,
-        userId,
-        cashRegisterId,
-        products: orderItems.map(item => ({
-          variantId: item.variantId,
-          quantity: item.quantity
-        }))
-      }),
-    });
+    try {
+      const res = await fetch("https://backmagnus-production.up.railway.app/api/order/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          tableId: table.id,
+          userId,
+          cashRegisterId,
+          products: orderItems.map(item => ({
+            variantId: item.variantId,
+            quantity: item.quantity
+          }))
+        }),
+      });
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.msg || "Falta un ingrediente en la receta o inventario");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.msg || "Falta un ingrediente en la receta o inventario");
 
-    toast({ title: "Pedido creado exitosamente", status: "success" });
-    onOrderSuccess?.();
-  } catch (err) {
-    toast({ title: "Error", description: err.message || "Falta un ingrediente en la receta o inventario" });
-  }
-};
+      toast({ title: "Pedido creado exitosamente", status: "success" });
+      onOrderSuccess?.();
+    } catch (err) {
+      toast({ title: "Error", description: err.message || "Falta un ingrediente en la receta o inventario" });
+    }
+  };
 
- const filteredProducts = products.filter((combo) =>
+  // 🔍 Filtro por nombre o variantId
+  const filteredProducts = products.filter((combo) =>
     combo.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     combo.variantId.toString().includes(searchQuery)
+    // Puedes agregar búsqueda por código si existe:
+    // || combo.code?.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="5xl">
       <ModalOverlay />
-      <ModalContent maxW={{ base: "100%", md: "5xl" }} p={{ base: 4, md: 8}}>
+      <ModalContent maxW={{ base: "100%", md: "5xl" }} p={{ base: 4, md: 8 }}>
         <ModalHeader>Crear Pedido - Mesa {table?.number}</ModalHeader>
         <ModalCloseButton />
-           <Input
-                placeholder="Buscar por nombre o código"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                mb={4}
-              />
+        <Input
+          placeholder="Buscar por nombre o código"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          mb={4}
+        />
         <ModalBody>
           <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={6}>
             {/* Resumen Pedido */}
@@ -152,8 +156,8 @@ const handleSubmit = async () => {
               <Box mt={6}>
                 <Text><strong>Subtotal:</strong> ${subtotal.toLocaleString()}</Text>
                 <Box borderTop="1px solid #e2e8f0" mt={4} pt={4}>
-                <Text><strong>Costos de envío:</strong> $0</Text>
-                <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
+                  <Text><strong>Costos de envío:</strong> $0</Text>
+                  <Text fontSize="lg" mt={2}><strong>TOTAL:</strong> ${total.toLocaleString()}</Text>
                 </Box>
               </Box>
               <Button mt={4} colorScheme="green" onClick={handleSubmit}>
@@ -161,11 +165,9 @@ const handleSubmit = async () => {
               </Button>
             </Box>
 
-            {/* Combos Disponibles */}
-           
-          
+            {/* Combos filtrados */}
             <Grid templateColumns="repeat(auto-fit, minmax(160px, 1fr))" gap={2}>
-              {products.map((combo) => (
+              {filteredProducts.map((combo) => (
                 <Box
                   key={combo.variantId}
                   bg="gray.100"
@@ -177,7 +179,6 @@ const handleSubmit = async () => {
                 >
                   <Text fontWeight="bold">{combo.productName}</Text>
                   <Badge colorScheme="blue" mt={2}>${combo.priceperUnit.toLocaleString()}</Badge>
-                  <Text fontSize="sm" color="gray.600"></Text>
                 </Box>
               ))}
             </Grid>
