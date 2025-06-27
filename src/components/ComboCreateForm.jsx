@@ -21,21 +21,32 @@ const ComboCreateForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [categories, setCategories] = useState([]);
   const [allVariants, setAllVariants] = useState([]);
   const [components, setComponents] = useState([]);
   const toast = useToast();
 
   useEffect(() => {
-    const fetchVariants = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch("https://backmagnus-production.up.railway.app/api/variant/all", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await res.json();
+        const [variantsRes, categoriesRes] = await Promise.all([
+          fetch("https://backmagnus-production.up.railway.app/api/variant/all", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }),
+          fetch("https://backmagnus-production.up.railway.app/api/category/all", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }),
+        ]);
 
-        const flattened = data.flatMap((product) =>
+        const variantsData = await variantsRes.json();
+        const categoriesData = await categoriesRes.json();
+
+        const flattened = variantsData.flatMap((product) =>
           product.variants.map((variant) => ({
             id: variant.id,
             Product: { name: product.description },
@@ -44,12 +55,13 @@ const ComboCreateForm = () => {
         );
 
         setAllVariants(flattened);
+        setCategories(categoriesData);
       } catch (err) {
-        console.error("Error cargando variantes:", err);
+        console.error("Error cargando datos:", err);
       }
     };
 
-    fetchVariants();
+    fetchData();
   }, []);
 
   const addComponent = () => {
@@ -80,6 +92,7 @@ const ComboCreateForm = () => {
           name,
           description,
           price,
+          categoryId,
           componentes: components,
         }),
       });
@@ -91,6 +104,7 @@ const ComboCreateForm = () => {
       setName("");
       setDescription("");
       setPrice("");
+      setCategoryId("");
       setComponents([]);
     } catch (err) {
       toast({ title: "Error", description: err.message, status: "error" });
@@ -99,89 +113,104 @@ const ComboCreateForm = () => {
 
   return (
     <Box maxW="700px" mx="auto" mt={10} p={8} bg="white" borderRadius="md" boxShadow="lg">
-  <Heading size="lg" mb={6} textAlign="center">
-    Crear Receta
-  </Heading>
+      <Heading size="lg" mb={6} textAlign="center">
+        Crear Receta
+      </Heading>
 
-  <VStack spacing={4} align="stretch">
-    <FormControl isRequired>
-      <FormLabel>Nombre</FormLabel>
-      <Input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Ej: Arepa típica rellena"
-      />
-    </FormControl>
+      <VStack spacing={4} align="stretch">
+        <FormControl isRequired>
+          <FormLabel>Nombre</FormLabel>
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ej: Arepa típica rellena"
+          />
+        </FormControl>
 
-    <FormControl isRequired>
-      <FormLabel>Descripción</FormLabel>
-      <Textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Ej: Arepa de maíz con pollo desmechado y guacamole"
-      />
-    </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Descripción</FormLabel>
+          <Textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Ej: Arepa de maíz con pollo desmechado y guacamole"
+          />
+        </FormControl>
 
-    <FormControl isRequired>
-      <FormLabel>Precio</FormLabel>
-      <Input
-        type="number"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        placeholder="Ej: 12000"
-      />
-    </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Precio</FormLabel>
+          <Input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Ej: 12000"
+          />
+        </FormControl>
 
-    <Button
-      leftIcon={<AddIcon />}
-      onClick={addComponent}
-      colorScheme="teal"
-      variant="solid"
-      w="full"
-    >
-      Agregar ingrediente
-    </Button>
+        <FormControl isRequired>
+          <FormLabel>Categoría</FormLabel>
+          <Select
+            placeholder="Selecciona una categoría"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+          >
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
 
-    {components.map((comp, idx) => (
-      <HStack key={idx} spacing={4} align="center">
-        <Select
-          placeholder="Selecciona un ingrediente"
-          value={comp.variantId}
-          onChange={(e) => updateComponent(idx, "variantId", e.target.value)}
-          flex="1"
+        <Button
+          leftIcon={<AddIcon />}
+          onClick={addComponent}
+          colorScheme="teal"
+          variant="solid"
+          w="full"
         >
-          {allVariants.map((v) => (
-            <option key={v.id} value={v.id}>
-              {v.Product?.name} - {v.vatiantName}
-            </option>
-          ))}
-        </Select>
+          Agregar ingrediente
+        </Button>
 
-        <NumberInput
-          min={1}
-          value={comp.quantity}
-          onChange={(val) => updateComponent(idx, "quantity", parseInt(val) || 1)}
-          maxW="100px"
-        >
-          <NumberInputField placeholder="Cant." />
-        </NumberInput>
+        {components.map((comp, idx) => (
+          <HStack key={idx} spacing={4} align="center">
+            <Select
+              placeholder="Selecciona un ingrediente"
+              value={comp.variantId}
+              onChange={(e) => updateComponent(idx, "variantId", e.target.value)}
+              flex="1"
+            >
+              {allVariants.map((v) => (
+                <option key={v.id} value={v.id}>
+                  {v.Product?.name} - {v.vatiantName}
+                </option>
+              ))}
+            </Select>
 
-        <IconButton
-          aria-label="Eliminar"
-          icon={<DeleteIcon />}
-          colorScheme="red"
-          onClick={() => removeComponent(idx)}
-        />
-      </HStack>
-    ))}
+            <NumberInput
+              min={1}
+              value={comp.quantity}
+              onChange={(val) =>
+                updateComponent(idx, "quantity", parseInt(val) || 1)
+              }
+              maxW="100px"
+            >
+              <NumberInputField placeholder="Cant." />
+            </NumberInput>
 
-    <Button colorScheme="blue" onClick={handleSubmit} w="full">
-      Crear receta
-    </Button>
-  </VStack>
-</Box>
+            <IconButton
+              aria-label="Eliminar"
+              icon={<DeleteIcon />}
+              colorScheme="red"
+              onClick={() => removeComponent(idx)}
+            />
+          </HStack>
+        ))}
 
-   
+        <Button colorScheme="blue" onClick={handleSubmit} w="full">
+          Crear receta
+        </Button>
+      </VStack>
+    </Box>
   );
 };
 
