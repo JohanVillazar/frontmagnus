@@ -16,6 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
+import CategoryFormModal from "./CategoryFormModal"; // Ajusta la ruta si es distinta
+import { useDisclosure } from "@chakra-ui/react";
+
 
 const ComboCreateForm = () => {
   const [name, setName] = useState("");
@@ -26,6 +29,12 @@ const ComboCreateForm = () => {
   const [allVariants, setAllVariants] = useState([]);
   const [components, setComponents] = useState([]);
   const toast = useToast();
+
+  const {
+    isOpen: isCategoryModalOpen,
+    onOpen: openCategoryModal,
+    onClose: closeCategoryModal,
+  } = useDisclosure();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -145,22 +154,28 @@ const ComboCreateForm = () => {
             placeholder="Ej: 12000"
           />
         </FormControl>
-
         <FormControl isRequired>
           <FormLabel>Categoría</FormLabel>
-          <Select
-            placeholder="Selecciona una categoría"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-          >
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </Select>
+          <HStack spacing={2}>
+            <Select
+              placeholder="Selecciona una categoría"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            >
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </Select>
+            <IconButton
+              icon={<AddIcon />}
+              colorScheme="blue"
+              aria-label="Agregar categoría"
+              onClick={openCategoryModal}
+            />
+          </HStack>
         </FormControl>
-
         <Button
           leftIcon={<AddIcon />}
           onClick={addComponent}
@@ -209,7 +224,16 @@ const ComboCreateForm = () => {
         <Button colorScheme="blue" onClick={handleSubmit} w="full">
           Crear receta
         </Button>
+        
       </VStack>
+      <CategoryFormModal
+        isOpen={isCategoryModalOpen}
+        onClose={closeCategoryModal}
+        onCategoryCreated={(newCategory) => {
+          setCategories((prev) => [...prev, newCategory]);
+          setCategoryId(newCategory.id); // seleccionar automáticamente la nueva
+        }}
+      />
     </Box>
   );
 };
