@@ -125,6 +125,7 @@ const Sidebar = () => {
 
           <NavItem icon={Store} to="/mesas" label="Mesas" />
           <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" />
+          <NavItem icon={ClipboardList} to="/compras/update" label="Gestionar Compras" />
           <NavItem icon={Users} to="/clientes" label="Clientes" />
           <NavItem icon={Hotel} to="/sucursales" label="crear" />
           <NavItem icon={Truck} to="/suppliers" label="Proveedores" />
