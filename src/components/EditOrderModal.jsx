@@ -100,7 +100,7 @@ const EditOrderModal = ({ isOpen, onClose, table }) => {
   };
 
   const handleCloseOrder = async () => {
-    const defaultCustomerId = "0fa184c9-af51-4565-9f68-d3c320062215";
+    const defaultCustomerId = "65b19534-cfc1-4568-8641-4fa19f00f02b";
 
     if (paymentMethod === "efectivo" && parseFloat(amountReceived) < total) {
       toast({
