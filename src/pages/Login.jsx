@@ -24,27 +24,28 @@ const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-const handleLogin = async () => {
-  try {
-    const res = await fetch("https://backmagnus-production.up.railway.app/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+  const handleLogin = async (e) => {
+    e.preventDefault(); // 🔐 Evita recarga del form
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.msg || "Credenciales incorrectas");
+    try {
+      const res = await fetch("https://backmagnus-production.up.railway.app/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    // ✅ Importante: usar la clave "user" (no "usuario")
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.msg || "Credenciales incorrectas");
 
-    toast({ title: "Inicio de sesión exitoso", status: "success" });
-    navigate("/dashboard");
-  } catch (error) {
-    toast({ title: "Error", description: error.message, status: "error" });
-  }
-};
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      toast({ title: "Inicio de sesión exitoso", status: "success" });
+      navigate("/dashboard");
+    } catch (error) {
+      toast({ title: "Error", description: error.message, status: "error" });
+    }
+  };
 
   return (
     <Flex h="100vh" flexDirection={{ base: "column", md: "row" }}>
@@ -53,38 +54,44 @@ const handleLogin = async () => {
         <Box w="full" maxW="md">
           <Heading mb={6}>Bienvenido de nuevo</Heading>
           <Text mb={6}>Ingresa tus credenciales para acceder al sistema</Text>
-          <Stack spacing={4}>
-            <FormControl isRequired>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                placeholder="correo@ejemplo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Contraseña</FormLabel>
-              <Input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormControl>
-            <Flex justify="space-between" align="center">
-              <Checkbox>Recordarme</Checkbox>
-             
-            </Flex>
-            <Button colorScheme="orange" onClick={handleLogin}>
-              Iniciar sesión
-            </Button>
-          </Stack>
-        
+
+          <form onSubmit={handleLogin}>
+            <Stack spacing={4}>
+              <FormControl isRequired>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  type="email"
+                  placeholder="correo@ejemplo.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel>Contraseña</FormLabel>
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="new-password" // 🔒 evita autocompletar
+                />
+              </FormControl>
+
+              <Flex justify="space-between" align="center">
+                <Checkbox>Recordarme</Checkbox>
+              </Flex>
+
+              <Button colorScheme="orange" type="submit">
+                Iniciar sesión
+              </Button>
+            </Stack>
+          </form>
         </Box>
       </Box>
 
-      {/* BRANDING CON IMAGEN */}
+      {/* IMAGEN LATERAL */}
       <Box
         flex={1}
         bg="white"
@@ -92,13 +99,12 @@ const handleLogin = async () => {
         alignItems="center"
         justifyContent="center"
         p={1}
-        
-        borderX={"1px solid"}
-        borderColor=" #f77700"
+        borderX="1px solid"
+        borderColor="#f77700"
       >
         <VStack spacing={4}>
           <Image
-            src="/magnus.png" 
+            src="/magnus.png"
             alt="Magnus POS"
             maxW="800px"
             objectFit="contain"
