@@ -79,7 +79,7 @@ const PurchaseCardList = () => {
               </HStack>
               <HStack justify="space-between" w="full">
                 <Text fontWeight="bold">Sucursal:</Text>
-                <Text>{purchase.Sucursal?.name || "N/A"}</Text>
+                <Text>{purchase.Sucrusal?.name || "N/A"}</Text>
               </HStack>
               <HStack justify="space-between" w="full">
                 <Text fontWeight="bold">Total:</Text>
