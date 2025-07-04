@@ -4,7 +4,7 @@ import {
   AccordionPanel, Text, HStack, Avatar, Button, Icon, Link, Flex
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Package, Plus, ListChecks, Component, Warehouse, LogOut, Store, ClipboardList, Users, Truck, UserCog,Hotel,PlayCircle,NotebookPen } from "lucide-react";
+import { LayoutDashboard, Package, Plus, ListChecks, Component, Warehouse, LogOut, Store, ClipboardList, Users, Truck, UserCog,Hotel,PlayCircle,NotebookPen,ShoppingBasket } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 const SidebarContent = ({ onClose }) => {
@@ -84,7 +84,7 @@ const SidebarContent = ({ onClose }) => {
                         borderRadius="md"
                       >
                         <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
-                          <Icon as={ClipboardList} boxSize={4} />
+                          <Icon as={ShoppingBasket} boxSize={4} />
                           <Text fontSize="sm">Compras</Text>
                         </Box>
                         <AccordionIcon />
@@ -99,7 +99,6 @@ const SidebarContent = ({ onClose }) => {
                   </Accordion>
                   {/* Fin Desplegable compras */}
 
-        <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" onClick={onClose} />
         <NavItem icon={Users} to="/clientes" label="Clientes" onClick={onClose} />
         <NavItem icon={Hotel} to="/sucursales" label="Sucursales" />
         <NavItem icon={Truck} to="/suppliers" label="Proveedores" onClick={onClose} />
