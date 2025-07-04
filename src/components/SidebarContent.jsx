@@ -4,7 +4,7 @@ import {
   AccordionPanel, Text, HStack, Avatar, Button, Icon, Link, Flex
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Package, Plus, ListChecks, Component, Warehouse, LogOut, Store, ClipboardList, Users, Truck, UserCog,Hotel,PlayCircle } from "lucide-react";
+import { LayoutDashboard, Package, Plus, ListChecks, Component, Warehouse, LogOut, Store, ClipboardList, Users, Truck, UserCog,Hotel,PlayCircle,NotebookPen } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 const SidebarContent = ({ onClose }) => {
@@ -74,6 +74,31 @@ const SidebarContent = ({ onClose }) => {
           </AccordionItem>
         </Accordion>
         <NavItem icon={Store} to="/mesas" label="Mesas" onClick={onClose} />
+          {/* Desplegable compras */}
+                  <Accordion allowToggle w="full">
+                    <AccordionItem border="none">
+                      <AccordionButton
+                        _hover={{ bg: "#f77700" }}
+                        px={3}
+                        py={2}
+                        borderRadius="md"
+                      >
+                        <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
+                          <Icon as={ClipboardList} boxSize={4} />
+                          <Text fontSize="sm">Compras</Text>
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel px={3} pb={2}>
+                        <VStack align="start" spacing={1}>
+                          <SubNavItem icon={ClipboardList} to="/compras/nueva" label="Registrar Compra" />
+                          <SubNavItem icon={NotebookPen} to="/compras/update" label="Gestionar Compras" />
+                        </VStack>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                  {/* Fin Desplegable compras */}
+
         <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" onClick={onClose} />
         <NavItem icon={Users} to="/clientes" label="Clientes" onClick={onClose} />
         <NavItem icon={Hotel} to="/sucursales" label="Sucursales" />
