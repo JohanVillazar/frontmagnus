@@ -124,8 +124,30 @@ const Sidebar = () => {
           </Accordion>
 
           <NavItem icon={Store} to="/mesas" label="Mesas" />
-          <NavItem icon={ClipboardList} to="/compras/nueva" label="Compras" />
-          <NavItem icon={ClipboardList} to="/compras/update" label="Gestionar Compras" />
+
+          <Accordion allowToggle w="full">
+            <AccordionItem border="none">
+              <AccordionButton
+                _hover={{ bg: "#f77700" }}
+                px={3}
+                py={2}
+                borderRadius="md"
+              >
+                <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
+                  <Box as={ClipboardList} size="18px" />
+                  <Text fontSize="sm">Compras</Text>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel px={3} pb={2}>
+                <VStack align="start" spacing={1}>
+                  <SubNavItem icon={ClipboardList} to="/compras/nueva" label="Registrar Compra" />
+                  <SubNavItem icon={ClipboardList} to="/compras/update" label="Gestionar Compras" />
+                </VStack>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+
           <NavItem icon={Users} to="/clientes" label="Clientes" />
           <NavItem icon={Hotel} to="/sucursales" label="crear" />
           <NavItem icon={Truck} to="/suppliers" label="Proveedores" />
