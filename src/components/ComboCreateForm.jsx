@@ -224,7 +224,7 @@ const ComboCreateForm = () => {
         <Button colorScheme="blue" onClick={handleSubmit} w="full">
           Crear receta
         </Button>
-        
+
       </VStack>
       <CategoryFormModal
         isOpen={isCategoryModalOpen}
@@ -234,6 +234,8 @@ const ComboCreateForm = () => {
           setCategoryId(newCategory.id); // seleccionar automáticamente la nueva
         }}
       />
+
+  
     </Box>
   );
 };
