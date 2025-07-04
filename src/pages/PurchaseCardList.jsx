@@ -83,7 +83,12 @@ const PurchaseCardList = () => {
               </HStack>
               <HStack justify="space-between" w="full">
                 <Text fontWeight="bold">Detalle:</Text>
-                <Text>{detail.quantity} x {detail.productVariant?.Product?.name || "Producto desconocido"}</Text>
+                {purchase.PurchaseDetails?.map((detail, i) => (
+                  <Text key={i} fontSize="sm" color="gray.700">
+                    {detail.quantity} x {detail.productVariant?.Product?.name || "Producto desconocido"}
+                  </Text>
+                ))}
+                
               </HStack>
 
               <HStack justify="space-between" w="full">
