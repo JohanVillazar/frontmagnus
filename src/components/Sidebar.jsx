@@ -125,6 +125,7 @@ const Sidebar = () => {
 
           <NavItem icon={Store} to="/mesas" label="Mesas" />
 
+          {/* Desplegable compras */}
           <Accordion allowToggle w="full">
             <AccordionItem border="none">
               <AccordionButton
@@ -134,7 +135,7 @@ const Sidebar = () => {
                 borderRadius="md"
               >
                 <Box flex="1" textAlign="left" display="flex" alignItems="center" gap={3}>
-                  <Box as={ClipboardList} size="18px" />
+                  <Icon as={ClipboardList} boxSize={4} />
                   <Text fontSize="sm">Compras</Text>
                 </Box>
                 <AccordionIcon />
@@ -147,6 +148,8 @@ const Sidebar = () => {
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
+          {/* Fin Desplegable compras */}
+
 
           <NavItem icon={Users} to="/clientes" label="Clientes" />
           <NavItem icon={Hotel} to="/sucursales" label="crear" />
