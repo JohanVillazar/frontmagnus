@@ -82,6 +82,11 @@ const PurchaseCardList = () => {
                 <Text>{purchase.Sucrusal?.name || "N/A"}</Text>
               </HStack>
               <HStack justify="space-between" w="full">
+                <Text fontWeight="bold">Detalle:</Text>
+                <Text>{detail.quantity} x {detail.productVariant?.Product?.name || "Producto desconocido"}</Text>
+              </HStack>
+
+              <HStack justify="space-between" w="full">
                 <Text fontWeight="bold">Total:</Text>
                 <Text>${purchase.totalAmount.toLocaleString()}</Text>
               </HStack>
@@ -89,13 +94,18 @@ const PurchaseCardList = () => {
                 <Text fontWeight="bold">Fecha:</Text>
                 <Text>{new Date(purchase.createdAt).toLocaleString("es-CO")}</Text>
               </HStack>
+              
               <Badge
                 colorScheme={purchase.status === "pagada" ? "green" : "orange"}
                 fontSize="sm"
+                
               >
                 {purchase.status.toUpperCase()}
               </Badge>
+              
               {purchase.status === "pendiente" && (
+              
+
                 <Button
                   size="sm"
                   colorScheme="blue"
