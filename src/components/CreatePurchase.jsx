@@ -137,13 +137,13 @@ const CreatePurchase = () => {
           <FormControl isRequired>
             <FormLabel>Proveedor</FormLabel>
             <Select
-              placeholder="Selecciona un proveedor"
+              placeholder="Selecciona proveedor"
               value={supplierId}
               onChange={(e) => setSupplierId(e.target.value)}
             >
-              {suppliers.map((supplier) => (
-                <option key={supplier.id} value={supplier.id}>
-                  {supplier.name}
+              {suppliers.map((sup) => (
+                <option key={sup.id} value={sup.id}>
+                  {sup.company} - {sup.Nit}
                 </option>
               ))}
             </Select>
