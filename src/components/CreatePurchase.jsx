@@ -15,6 +15,7 @@ const CreatePurchase = () => {
   const toast = useToast();
   const [supplierId, setSupplierId] = useState("");
   const suppliers = useSuppliers();
+  console.log("📦 suppliers:", suppliers); // ¿es array?
 
   useEffect(() => {
     const fetchData = async () => {
