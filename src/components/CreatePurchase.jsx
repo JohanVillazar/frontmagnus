@@ -1,5 +1,6 @@
 import { Box, Button, FormControl, FormLabel, Input, Select, VStack, Text, useToast, HStack, Divider, Heading, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useSuppliers } from "../hooks/useSuppliers";
 
 const CreatePurchase = () => {
   const [variants, setVariants] = useState([]);
@@ -12,6 +13,8 @@ const CreatePurchase = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [status, setStatus] = useState('pendiente'); // 🆕 Estado del status
   const toast = useToast();
+  const [supplierId, setSupplierId] = useState("");
+  const suppliers = useSuppliers();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,6 +132,24 @@ const CreatePurchase = () => {
               ))}
             </Select>
           </FormControl>
+
+          <FormControl isRequired>
+            <FormLabel>Proveedor</FormLabel>
+            <Select
+              placeholder="Selecciona un proveedor"
+              value={supplierId}
+              onChange={(e) => setSupplierId(e.target.value)}
+            >
+              {suppliers.map((supplier) => (
+                <option key={supplier.id} value={supplier.id}>
+                  {supplier.name}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+
+          
+          
 
           <FormControl isRequired>
             <FormLabel>Estado de la compra</FormLabel>

@@ -74,7 +74,7 @@ const CreateProductForm = ({ onSuccess }) => {
 
       toast({
         title: "Producto creado",
-        description: "Ahora puedes agregar variantes",
+        description: "Ahora puedes agregar las presentaciones",
         status: "success",
         duration: 3000,
         isClosable: true,
