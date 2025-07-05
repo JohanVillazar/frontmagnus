@@ -14,7 +14,7 @@ const CreatePurchase = () => {
   const [status, setStatus] = useState('pendiente'); // 🆕 Estado del status
   const toast = useToast();
   const [supplierId, setSupplierId] = useState("");
-  const suppliers = useSuppliers();
+  const { suppliers } = useSuppliers();
   console.log("📦 suppliers:", suppliers); // ¿es array?
 
   useEffect(() => {
